@@ -57,7 +57,7 @@ The "gdpr-replacements" option expects a JSON string with the following format
 Where *formatterType* is one of the following
 * **name** - generates a name
 * **phoneNumber** - generates a phone number
-* **username** - generates a random user name
+* **username** - generates a random user name (NOT FUNCTIONING)
 * **password** - generates a random password
 * **email** - generates a random email address
 * **date** - generates a date
