@@ -6,7 +6,7 @@
     "ifsnop/mysqldump-php": "dev-master",
     "cweagans/composer-patches": "^1.6",
     "bomoko/mysql-cnf-parser": "dev-master",
-    "fzaninotto/faker": "^1.7",
+    "fzaninotto/faker": "dev-master",
     "symfony/event-dispatcher": "~3.4|~4.0"
   },
   "license": "GPL-2.0-or-later",
@@ -39,5 +39,10 @@
   "prefer-stable": true,
   "require-dev": {
     "phpunit/phpunit": "^7.2"
+  },
+  "config": {
+    "allow-plugins": {
+      "cweagans/composer-patches": true
+    }
   }
 }
