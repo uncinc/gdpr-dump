@@ -6,7 +6,7 @@
     "ifsnop/mysqldump-php": "dev-master",
     "cweagans/composer-patches": "^1.6",
     "bomoko/mysql-cnf-parser": "dev-master",
-    "fzaninotto/faker": "dev-master",
+    "fakerphp/faker": "^1.20",
     "symfony/event-dispatcher": "~3.4|~4.0"
   },
   "license": "GPL-2.0-or-later",
