@@ -12,7 +12,7 @@ class ColumnTransformerTest extends TestCase
         $gdprExpressions = json_decode($this->jsonData, TRUE);
         $tableName = "users_field_data";
         $columnName = "pass";
-        $result = ColumnTransformer::replaceValue($tableName, $columnName, $gdprExpressions[$tableName][$columnName]);
+        $result = ColumnTransformer::replaceValue($tableName, $columnName, $gdprExpressions[$tableName][$columnName], 'en_US');
         $this->assertTrue(is_string($result));
     }
 
@@ -21,7 +21,7 @@ class ColumnTransformerTest extends TestCase
         $gdprExpressions = json_decode($this->jsonData, TRUE);
         $tableName = "users_field_data";
         $columnName = "mail";
-        $result = ColumnTransformer::replaceValue($tableName, $columnName, $gdprExpressions[$tableName][$columnName]);
+        $result = ColumnTransformer::replaceValue($tableName, $columnName, $gdprExpressions[$tableName][$columnName], 'en_US');
         $this->assertTrue(is_string($result) && strlen($result) == 0);
     }
 }
