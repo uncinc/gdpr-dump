@@ -1,0 +1,20 @@
+{
+  "users_field_data": {
+    "name": {"formatter": "clear"},
+    "mail": {"formatter": "email"},
+    "init": {"formatter": "clear"},
+    "pass": {"formatter": "clear"},
+    "_exclude": {"mail": ["*@uncinc.nl"], "uid": ["0", "1"]}
+  },
+  "profile__field_address": {
+    "field_address_locality": {"formatter": "city"},
+    "field_address_dependent_locality": {"formatter": "clear"},
+    "field_address_postal_code": {"formatter": "postcode"},
+    "field_address_address_line1": {"formatter": "streetName"},
+    "field_address_address_line2": {"formatter": "buildingNumber"}
+  },
+  "profile__field_first_name": {
+    "field_first_name_value": {"formatter": "firstName"}
+  }
+}
+

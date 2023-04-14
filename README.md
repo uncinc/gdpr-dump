@@ -7,6 +7,8 @@ and can in principle dump any database that PDO supports.
 
 ## How to use
 
+*Scroll down a bit for usage with Drush.*
+
 There are presently two ways of manipulating data, 
 the first is by manipulating the actual SQL queries that are run on the server (given by the gdpr-expressions path), 
 and the second is by replacing column output before the dump is generated (given by the gdpr-replacements option).
@@ -75,7 +77,7 @@ You can also save replacements mapping to JSON file and use it with `--gdpr-repl
 ## Use with drush
 
 As this mimicks mysqldump, it can be use with drush, backup_migrate and any tool that uses mysqldump.
-Drush example:
+Example for your local Docker instance:
 
 ```
 $ export PATH=/var/www/html/vendor/bin:$PATH
@@ -84,6 +86,14 @@ $ which mysqldump
 $ drush sql-dump --tables-list=users_field_data --extra-dump=$'--gdpr-expressions=\'{"users_field_data":{"name":"uid","mail":"uid","init":"uid","pass":"\\"\\""}}\' --debug-sql'
 ```
 
+On Staging, Accept or Production environments you probably want to do the following (replace `environment.nl`):
+```
+$ export PATH=/data/www/environment.nl/current/vendor/bin/mysqldump:$PATH
+$ pwd
+/data/www/environment.nl/current
+$ drush sql-dump --extra-dump='--gdpr-replacements-file=../gdpr-replacements.json' --result-file=gdpr-dump.sql
+```
+If your project does not have a `gdpr-replacements.json` please use the template from this project and add one.
 ### MySqlOptions file
 
 You are able to have your gdpr-expressions/replacement options set in a mysql options file file.
