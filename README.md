@@ -88,11 +88,15 @@ $ drush sql-dump --tables-list=users_field_data --extra-dump=$'--gdpr-expression
 
 On Staging, Accept or Production environments you probably want to do the following (replace `environment.nl`):
 ```
-$ export PATH=/data/www/environment.nl/current/vendor/bin/mysqldump:$PATH
+$ export PATH=/data/www/environment.nl/current/vendor/bin:$PATH
+$ which mysqldump
+/data/www/environment.nl/current/vendor/bin/mysqldump
 $ pwd
 /data/www/environment.nl/current
-$ drush sql-dump --extra-dump='--gdpr-replacements-file=../gdpr-replacements.json' --result-file=gdpr-dump.sql
+$ drush sql-dump --extra-dump='--gdpr-replacements-file=../gdpr-replacements.json' --result-file=~/gdpr-dump.sql
 ```
+This runs in the docroot, but most repositories have the `gdpr-replacements.json` in the root folder, hence the `../`.
+
 If your project does not have a `gdpr-replacements.json` please use the template from this project and add one.
 ### MySqlOptions file
 
