@@ -62,6 +62,7 @@ Where *formatterType* is one of the following
 * **username** - generates a random user name
 * **password** - generates a random password
 * **email** - generates a random email address
+* **safeEmail** - same but with @example.org
 * **date** - generates a date
 * **longText** - generates a sentence
 * **number** - generates a number
