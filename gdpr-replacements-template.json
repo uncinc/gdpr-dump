@@ -1,7 +1,7 @@
 {
   "users_field_data": {
     "name": {"formatter": "clear"},
-    "mail": {"formatter": "email"},
+    "mail": {"formatter": "safeEmail"},
     "init": {"formatter": "clear"},
     "pass": {"formatter": "clear"},
     "_exclude": {"mail": ["*@uncinc.nl"], "uid": ["0", "1"]}
