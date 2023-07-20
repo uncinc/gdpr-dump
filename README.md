@@ -99,6 +99,10 @@ $ drush sql-dump --extra-dump='--gdpr-replacements-file=../gdpr-replacements.jso
 This runs in the docroot, but most repositories have the `gdpr-replacements.json` in the root folder, hence the `../`.
 
 If your project does not have a `gdpr-replacements.json` please use the template from this project and add one.
+
+#### Exclude table content
+`drush sql-dump` takes an argument called `--structure-tables-list`. From the docs:
+"A comma-separated list of tables to include for structure, but not data."
 ### MySqlOptions file
 
 You are able to have your gdpr-expressions/replacement options set in a mysql options file file.
