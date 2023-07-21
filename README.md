@@ -100,9 +100,18 @@ This runs in the docroot, but most repositories have the `gdpr-replacements.json
 
 If your project does not have a `gdpr-replacements.json` please use the template from this project and add one.
 
+#### Gitlab-CI `copy-x-database-to-x` jobs
+If your repo has a `gdpr-replacements.json`, you can manually trigger a job to copy the database do Accept/Staging environment, after a deployment.
+These jobs will use the `gdpr-replacements.json` if it's available.
+
 #### Exclude table content
 `drush sql-dump` takes an argument called `--structure-tables-list`. From the docs:
 "A comma-separated list of tables to include for structure, but not data."
+
+The Gitlab-CI `copy-x-database-to-x` jobs have been extended with a new parameter: `STRUCTURE_TABLES_LIST`
+You can configure the parameter in your .gitlab-ci.yml like so:
+`STRUCTURE_TABLES_LIST: "batch,cache_*,cachetags,flood,history,sessions,queue,watchdog,webform_submission,webform_submission_data"`
+
 ### MySqlOptions file
 
 You are able to have your gdpr-expressions/replacement options set in a mysql options file file.
