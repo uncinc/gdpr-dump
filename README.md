@@ -100,6 +100,10 @@ This runs in the docroot, but most repositories have the `gdpr-replacements.json
 
 If your project does not have a `gdpr-replacements.json` please use the template from this project and add one.
 
+To save diskspace, run it like so:
+```
+$ drush sql-dump --extra-dump='--gdpr-replacements-file=../gdpr-replacements.json' --result-file=~/gdpr-dump.sql --structure-tables-list="batch,cache_*,cachetags,flood,history,sessions,queue,watchdog,webform_submission,webform_submission_data"
+```
 #### Gitlab-CI `copy-x-database-to-x` jobs
 If your repo has a `gdpr-replacements.json`, you can manually trigger a job to copy the database do Accept/Staging environment, after a deployment.
 These jobs will use the `gdpr-replacements.json` if it's available.
