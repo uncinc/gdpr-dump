@@ -251,6 +251,9 @@ class DumpCommand extends Command
             $dumper = new MysqldumpGdpr($dsn, $user, $password, $dumpSettings,
                 $pdoSettings);
             $dumper->start($input->getOption('result-file'));
+
+            // Make sure to return with exit code 0.
+            return 0;
         }
     }
 

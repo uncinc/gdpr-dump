@@ -35,10 +35,14 @@ abstract class ColumnTransformer
     public static function replaceValue($tableName, $columnName, $expression, $locale)
     {
         self::setUp($locale);
-        $event = new ColumnTransformEvent($tableName, $columnName, $expression);
-        self::$dispatcher->dispatch(self::COLUMN_TRANSFORM_REQUEST, $event);
-        if ($event->isReplacementSet()) {
-            return $event->getReplacementValue();
+
+        if ($expression) {
+          $event = new ColumnTransformEvent($tableName, $columnName, $expression);
+          self::$dispatcher->dispatch($event, self::COLUMN_TRANSFORM_REQUEST);
+
+          if ($event->isReplacementSet()) {
+              return $event->getReplacementValue();
+          }
         }
 
         return false;
