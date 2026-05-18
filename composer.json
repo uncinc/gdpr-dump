@@ -36,9 +36,6 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "require-dev": {
-    "phpunit/phpunit": "^8"
-  },
   "config": {
     "allow-plugins": {
       "cweagans/composer-patches": true

@@ -1,9 +1,9 @@
 <?php
 
 namespace machbarmacher\GdprDump\ColumnTransformer;
-use Exception;
 
-class ParseExpressionException extends Exception
-{
-    //
+/**
+ * Exception thrown when a column transformer expression cannot be parsed.
+ */
+class ParseExpressionException extends \Exception {
 }

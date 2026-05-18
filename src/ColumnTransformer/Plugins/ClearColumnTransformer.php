@@ -4,16 +4,23 @@ namespace machbarmacher\GdprDump\ColumnTransformer\Plugins;
 
 use machbarmacher\GdprDump\ColumnTransformer\ColumnTransformer;
 
-class ClearColumnTransformer extends ColumnTransformer
-{
+/**
+ * Transformer that clears a column value by returning an empty string.
+ */
+class ClearColumnTransformer extends ColumnTransformer {
 
-    protected function getSupportedFormatters()
-    {
-        return ['clear'];
-    }
+  /**
+   * Returns the supported formatter names.
+   */
+  protected function getSupportedFormatters() {
+    return ['clear'];
+  }
 
-    public function getValue($expression)
-    {
-        return "";
-    }
+  /**
+   * Returns an empty string as the replacement value.
+   */
+  public function getValue($expression) {
+    return "";
+  }
+
 }

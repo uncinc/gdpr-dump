@@ -2,61 +2,89 @@
 
 namespace machbarmacher\GdprDump\ColumnTransformer;
 
-
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use machbarmacher\GdprDump\ColumnTransformer\Plugins\ClearColumnTransformer;
 use machbarmacher\GdprDump\ColumnTransformer\Plugins\FakerColumnTransformer;
 
-abstract class ColumnTransformer
-{
+/**
+ * Abstract base class for column value transformers.
+ */
+abstract class ColumnTransformer {
 
-    const COLUMN_TRANSFORM_REQUEST = "columntransform.request";
+  const COLUMN_TRANSFORM_REQUEST = "columntransform.request";
 
-    private $tableName;
+  /**
+   * The table name.
+   *
+   * @var string
+   */
+  private $tableName;
 
-    private $columnName;
+  /**
+   * The column name.
+   *
+   * @var string
+   */
+  private $columnName;
 
-    protected static $dispatcher;
+  /**
+   * The event dispatcher.
+   *
+   * @var \Symfony\Component\EventDispatcher\EventDispatcher
+   */
+  protected static $dispatcher;
 
-    public static function setUp($locale)
-    {
-        if (!isset(self::$dispatcher)) {
-            self::$dispatcher = new EventDispatcher();
+  /**
+   * Sets up the event dispatcher with registered transformer listeners.
+   */
+  public static function setUp($locale) {
+    if (!isset(self::$dispatcher)) {
+      self::$dispatcher = new EventDispatcher();
 
-            self::$dispatcher->addListener(self::COLUMN_TRANSFORM_REQUEST,
-              new FakerColumnTransformer($locale));
-            self::$dispatcher->addListener(self::COLUMN_TRANSFORM_REQUEST,
-              new ClearColumnTransformer());
-        }
-
+      self::$dispatcher->addListener(self::COLUMN_TRANSFORM_REQUEST,
+          new FakerColumnTransformer($locale));
+      self::$dispatcher->addListener(self::COLUMN_TRANSFORM_REQUEST,
+          new ClearColumnTransformer());
     }
 
-    public static function replaceValue($tableName, $columnName, $expression, $locale)
-    {
-        self::setUp($locale);
+  }
 
-        if ($expression) {
-          $event = new ColumnTransformEvent($tableName, $columnName, $expression);
-          self::$dispatcher->dispatch($event, self::COLUMN_TRANSFORM_REQUEST);
+  /**
+   * Replaces a column value using the matching transformer.
+   */
+  public static function replaceValue($tableName, $columnName, $expression, $locale) {
+    self::setUp($locale);
 
-          if ($event->isReplacementSet()) {
-              return $event->getReplacementValue();
-          }
-        }
+    if ($expression) {
+      $event = new ColumnTransformEvent($tableName, $columnName, $expression);
+      self::$dispatcher->dispatch($event, self::COLUMN_TRANSFORM_REQUEST);
 
-        return false;
+      if ($event->isReplacementSet()) {
+        return $event->getReplacementValue();
+      }
     }
 
-    public function __invoke(ColumnTransformEvent $event)
-    {
-        if (in_array(($event->getExpression())['formatter'],
-          $this->getSupportedFormatters())) {
-            $event->setReplacementValue($this->getValue($event->getExpression()));
-        }
+    return FALSE;
+  }
+
+  /**
+   * Invokes the transformer if the expression formatter is supported.
+   */
+  public function __invoke(ColumnTransformEvent $event) {
+    if (in_array(($event->getExpression())['formatter'],
+        $this->getSupportedFormatters())) {
+      $event->setReplacementValue($this->getValue($event->getExpression()));
     }
+  }
 
-    abstract public function getValue($expression);
+  /**
+   * Returns the transformed value for the given expression.
+   */
+  abstract public function getValue($expression);
 
-    abstract protected function getSupportedFormatters();
+  /**
+   * Returns the list of formatter names this transformer supports.
+   */
+  abstract protected function getSupportedFormatters();
+
 }
