@@ -30,7 +30,7 @@
   "extra": {
     "patches": {
       "ifsnop/mysqldump-php": {
-        "Add getter": "https://patch-diff.githubusercontent.com/raw/ifsnop/mysqldump-php/pull/137.patch"
+        "Add getter (rebased locally: upstream PR #137 targeted __destruct() at line 192, but later, unrelated changes to the constructor's pdoSettings/dumpSettings merge logic pushed __destruct() down to line 225, and the method that used to follow it was removed entirely, so the patch's trailing context no longer matched anything in ifsnop/mysqldump-php ^2.13. Re-anchored the same getter to right after the current __destruct())": "patches/ifsnop/mysqldump-php/137-uncinc.patch"
       }
     }
   },
