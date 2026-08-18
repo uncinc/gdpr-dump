@@ -92,6 +92,22 @@ class MysqldumpGdpr extends Mysqldump
       return FALSE;
     }
 
+    /**
+     * Reads the parent class's private $tableColumnTypes property.
+     *
+     * Mysqldump declares this property `private`, so it isn't visible to
+     * this subclass through normal property access. Reflection is used
+     * here instead of patching the vendor library just to add a getter.
+     *
+     * @return array
+     */
+    private function tableColumnTypes()
+    {
+        $property = new \ReflectionProperty(Mysqldump::class, 'tableColumnTypes');
+        $property->setAccessible(true);
+        return $property->getValue($this);
+    }
+
     public function getColumnStmt($tableName)
     {
         $columnStmt = parent::getColumnStmt($tableName);
