@@ -129,6 +129,77 @@ gdpr-replacements='{"fakertest":{"name": {"formatter":"name"}, "telephone": {"fo
 
 ```
 
+## Local development & testing
+
+You can exercise this tool against any running Drupal project's MySQL database without
+touching the Drupal codebase at all — you only need network access to its DB port.
+
+### Prerequisites
+
+* PHP CLI with the `pdo_mysql` extension (check with `php -m | grep pdo_mysql`)
+* Composer
+* A running Drupal site's MySQL/MariaDB container with its port exposed to the host.
+  Most `docker-compose.yml` setups already do this, e.g.:
+  ```yaml
+  mysql:
+    ports:
+      - "3306:3306"
+  ```
+  Grab the credentials from that `docker-compose.yml` (or the container's env vars) —
+  typically `MYSQL_USER` / `MYSQL_PASSWORD` / `MYSQL_DATABASE`.
+
+### Setup
+
+```
+$ composer install
+```
+
+That's it — no patched vendor packages or Composer plugins are required. (An earlier
+version of this tool patched a private property in `ifsnop/mysqldump-php` open via
+`cweagans/composer-patches`; it's since been replaced with a small `ReflectionProperty`
+read in `MysqldumpGdpr::tableColumnTypes()`, so nothing needs to be patched in the
+vendored library anymore.)
+
+### Running against the other project's database
+
+Point `mysqldump` at the host/port where the other project's DB is exposed, e.g. for a
+docker-compose Drupal site with MySQL published on `127.0.0.1:3306`:
+
+```
+$ php mysqldump --host=127.0.0.1 --port=3306 --user=drupal --password=drupal drupal \
+    users_field_data \
+    --gdpr-expressions='{"users_field_data":{"name":"uid","mail":"uid","pass":"\"\""}}' \
+    --debug-sql
+```
+
+or with the Faker-based replacements:
+
+```
+$ php mysqldump --host=127.0.0.1 --port=3306 --user=drupal --password=drupal drupal \
+    users_field_data \
+    --gdpr-replacements='{"users_field_data":{"name":{"formatter":"clear"},"mail":{"formatter":"safeEmail"}}}'
+```
+
+Since this only reads from the source DB and writes SQL to stdout, it's safe to run
+against a live-but-local development database — it never mutates the source. Redirect
+to a file with `> dump.sql`, or pipe straight into a local MySQL client to load it into
+a scratch database:
+
+```
+$ php mysqldump --host=127.0.0.1 --port=3306 --user=drupal --password=drupal drupal \
+    --gdpr-replacements-file=./gdpr-replacements-template.json \
+    | mysql -h127.0.0.1 -uroot -p my_scratch_db
+```
+
+Compare the sanitized output against a plain dump (drop the `--gdpr-*` flag) to confirm
+the fields you expect are actually being transformed.
+
+### Running the test suite
+
+```
+$ vendor/bin/phpunit
+```
+
 ## Status and further development
 
 Currently this is a proof of concept to spark a community process.

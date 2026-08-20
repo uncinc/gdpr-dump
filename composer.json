@@ -27,21 +27,9 @@
       "machbarmacher\\GdprDump\\": "src/"
     }
   },
-  "extra": {
-    "patches": {
-      "ifsnop/mysqldump-php": {
-        "Add getter": "https://patch-diff.githubusercontent.com/raw/ifsnop/mysqldump-php/pull/137.patch"
-      }
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require-dev": {
     "phpunit/phpunit": "^8"
-  },
-  "config": {
-    "allow-plugins": {
-      "cweagans/composer-patches": true
-    }
   }
 }
