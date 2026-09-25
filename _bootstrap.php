@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ALL & E_STRICT);
+error_reporting(E_ALL);
 
 // Handling autoloading for different use cases.
 // @see https://github.com/sebastianbergmann/phpunit/blob/master/phpunit
