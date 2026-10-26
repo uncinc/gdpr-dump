@@ -2,11 +2,11 @@
   "name": "uncinc/gdpr-dump",
   "description": "A drop-in replacement for mysqldump that optionally sanitizes DB fields for better GDPR conformity.",
   "require": {
-    "symfony/console": "^6.3",
+    "symfony/console": "^6.3 || ^7.0",
     "ifsnop/mysqldump-php": "^2.12",
     "bomoko/mysql-cnf-parser": "^0.0.3",
     "fakerphp/faker": "^1.23",
-    "symfony/event-dispatcher": "^6.3"
+    "symfony/event-dispatcher": "^6.3 || ^7.0"
   },
   "license": "GPL-2.0-or-later",
   "authors": [
